@@ -43,7 +43,9 @@ var timer = setInterval(function() {
 				}
 				notifications.push(e.id);
 
-				var notification = new Notification(e.subject.type, { tag: e.id,  body: e.subject.title });
+				var notification = new Notification(e.repository.name, { 
+					tag: e.id,  
+					body: e.subject.type + '\n' + e.subject.title });
 				notification.onclick = function () {
 					shell.openExternal("https://github.com/notifications")
 				};
