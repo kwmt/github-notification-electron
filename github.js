@@ -34,19 +34,21 @@ var notifications = []
 var timer = setInterval(function() {
 	if (ghme != undefined) {
  	  ghme.notifications({}, function(err, data, headers) {
- 	 		if (data.length > 0) {
-				data.forEach(function(e,i,a) {
-					if (notifications.indexOf(e.id) >= 0) {
-						return;
-					}
-					notifications.push(e.id);
+ 	 		if (data.length == 0) {
+ 	 			return;
+ 	 		}
+			data.forEach(function(e,i,a) {
+				if (notifications.indexOf(e.id) >= 0) {
+					return;
+				}
+				notifications.push(e.id);
 
-					var notification = new Notification(e.subject.type, { tag: e.id,  body: e.subject.title });
-					notification.onclick = function () {
-						shell.openExternal("https://github.com/notifications")
-					};
-				})
- 	   	}
+				var notification = new Notification(e.subject.type, { tag: e.id,  body: e.subject.title });
+				notification.onclick = function () {
+					shell.openExternal("https://github.com/notifications")
+				};
+			})
+ 	   	
 		});
 	}
 }, 3000);
